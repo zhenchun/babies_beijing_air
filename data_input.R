@@ -10,6 +10,7 @@ temp<-data.frame()
 years<-c("2018","2019","2020")
 
 pm2.5<-list()
+colnam<-c("date", "hour", "type", sta_info$name)
 
 for(year in years){
   
@@ -28,7 +29,7 @@ for(year in years){
     pm2.5_hour<-data.frame()
     
     for(i in 1:24) {
-      pm2.5_hour[i,1:38]<-temp[n,1:30]
+      pm2.5_hour[i,1:38]<-temp[n,1:38]
       n=i*5+1
     } 
     
@@ -36,10 +37,8 @@ for(year in years){
   }
     
     
-    
-    
   pm2.5[[year]]<-pm2.5_all  
-  names(pm2.5[[year]])<-
+  names(pm2.5[[year]])<-colnam
 
 }
 
