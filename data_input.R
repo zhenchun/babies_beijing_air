@@ -131,6 +131,36 @@ names(cor.result.2018)<-c("pm2.5_so2","pm2.5_no2","pm2.5_ozone")
 
 
 
+sta_2019<-list()
+cor_2019<-list()
+
+for (nam in sta_names){
+  
+  sta_2019[[nam]]<-cbind(pm2.5[["2019"]][,c("date", "hour",nam)], pm10[["2019"]][,nam],
+                         so2[["2019"]][,nam], no2[["2019"]][,nam], 
+                         ozone[["2019"]][,nam], co[["2019"]][,nam])  
+  
+  names(sta_2019[[nam]])<-c("date", "hour", "pm2.5", "pm10", "so2", "no2", "ozone", "co")
+  
+  
+  cor_2019[[nam]]<-cor(sta_2019[[nam]][, -c(1,2)], use = "na.or.complete") 
+  
+  
+}
+
+
+cor.result.2019<-data.frame()
+
+for (o in 1:35){
+  
+  
+  cor.result.2019[o, 1:3]<-cor_2019[[o]][1,c(3,4,5)]
+}
+
+names(cor.result.2019)<-c("pm2.5_so2","pm2.5_no2","pm2.5_ozone")
+
+
+
 
 dongsi_2018<-sta_2018[["dongsi"]] 
 
