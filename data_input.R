@@ -16,12 +16,12 @@ no2<-list()
 ozone<-list()
 co<-list()
 
+sta_names<-c("dongsi","tiantan","guanyuan","wanshouxigong","aotizhongxin","nongzhanguan","wanliu","beibuxinqu","zhiwuyuan",     
+             "fengtaihuayuan", "yungang","gucheng","fangshan","daxing","yizhuang","tongzhou","shunyi","changping","mentougou", "pinggu", "huairou",       
+             "miyun","yanqing","dingling","badaling","miyunshuiku","donggaocun", "yongledian","yufa","liulihe","qianmen","yongdingneimen","xizhimengbei",  
+             "nansanhuan","dongsihuan")
 
-
-colnam<-c("date", "hour", "type", "dongsi","tiantan","guanyuan","wanshouxigong","aotizhongxin","nongzhanguan","wanliu","beibuxinqu","zhiwuyuan",     
-          "fengtaihuayuan", "yungang","gucheng","fangshan","daxing","yizhuang","tongzhou","shunyi","changping","mentougou", "pinggu", "huairou",       
-          "miyun","yanqing","dingling","badaling","miyunshuiku","donggaocun", "yongledian","yufa","liulihe","qianmen","yongdingneimen","xizhimengbei",  
-          "nansanhuan","dongsihuan")
+colnam<-c("date", "hour", "type", sta_names)
 
 for(year in years){
   
@@ -98,5 +98,44 @@ for(year in years){
   names(co[[year]])<-colnam
 
 }
+
+
+sta_2018<-list()
+cor_2018<-list()
+
+for (nam in sta_names){
+
+  sta_2018[[nam]]<-cbind(pm2.5[["2018"]][,c("date", "hour",nam)], pm10[["2018"]][,nam],
+                         so2[["2018"]][,nam], no2[["2018"]][,nam], 
+                         ozone[["2018"]][,nam], co[["2018"]][,nam])  
+  
+  names(sta_2018[[nam]])<-c("date", "hour", "pm2.5", "pm10", "so2", "no2", "ozone", "co")
+  
+  
+  cor_2018[[nam]]<-cor(sta_2018[[nam]][, -c(1,2)], use = "na.or.complete") 
+  
+  
+}
+
+
+cor.result.2018<-data.frame()
+
+for (o in 1:35){
+  
+  
+  cor.result.2018[o, 1:3]<-cor_2018[[o]][1,c(3,4,5)]
+}
+
+names(cor.result.2018)<-c("pm2.5_so2","pm2.5_no2","pm2.5_ozone")
+
+
+
+
+
+dongsi_2018<-sta_2018[["dongsi"]] 
+
+
+
+
 
 
