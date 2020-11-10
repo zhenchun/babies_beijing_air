@@ -37,7 +37,6 @@ for (p in pollutants){
 
 dat<- read_csv(paste0("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/babies_pred_",p,".csv")) #a是导入的数据表新命名名称
 a<-dat[,-1] #删除第一列序号，不用重复
-attach(a)
 bb2=data.frame() #创建bb2空的数据集件
 
 bb1=data.frame() #创建一个空的bb1数据集
