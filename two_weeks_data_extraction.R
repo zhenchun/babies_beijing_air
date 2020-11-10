@@ -2,7 +2,7 @@ library(readr) #加载读取excel包
 library(stringr)
 library(lubridate)
 
-pollutants<-c("NO2", "PM2.5", "PM10", "CO", "ozone", "SO2")
+pollutants<-c("NO2", "SO2")
 
 visit_date <- read_csv("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/visit_date.csv")
 
