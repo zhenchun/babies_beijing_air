@@ -12,7 +12,7 @@ result<-data.frame()
 result[1:861,1]<-visit_date$id
 result[1:861,2]<-visit_date$date
 
-b<-read_csv(paste0("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/babies_pred_NO2.csv"))
+b<-read_csv(paste0("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/3d/babies_pred_NO2.csv"))
 b<-b[,-1]
 
 coln<-c()
@@ -36,7 +36,7 @@ for(j in 1: length(uniq)){
 
 for (p in pollutants){
 
-dat<- read_csv(paste0("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/babies_pred_",p,".csv")) 
+dat<- read_csv(paste0("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/3d/babies_pred_",p,".csv")) 
 a<-dat[,-1] 
 bb2=data.frame() 
 
@@ -93,7 +93,7 @@ total_col=cbind(dat[,1],bb2)
 
 for(i in 1:861){
   
-  result[i,p]= mean(total_col[between(total_col$X1, result[i, 2]-14, result[i, 2]), 
+  result[i,p]= mean(total_col[between(total_col$X1, result[i, 2]-7, result[i, 2]), 
                               colnames(total_col)==result[i,1]])
 }
 
@@ -103,6 +103,9 @@ for(i in 1:861){
 
 
 
+
+
+setwd("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2")
 
 
 
