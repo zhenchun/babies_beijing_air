@@ -2,8 +2,9 @@ library(readr)
 library(stringr)
 library(lubridate)
 library(dplyr)
+library(hydroTSM)
 
-pollutants<-c("NO2", "SO2")
+pollutants<-c("NO2", "SO2", "ozone", "ozone_8h", "PM2.5", "PM10", "CO")
 
 visit_date <- read_csv("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/visit_date.csv")
 
@@ -12,7 +13,7 @@ result<-data.frame()
 result[1:861,1]<-visit_date$id
 result[1:861,2]<-visit_date$date
 
-b<-read_csv(paste0("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/3d/babies_pred_NO2.csv"))
+b<-read_csv(paste0("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/2w/pred_babies_NO2.csv"))
 b<-b[,-1]
 
 coln<-c()
@@ -36,7 +37,7 @@ for(j in 1: length(uniq)){
 
 for (p in pollutants){
 
-dat<- read_csv(paste0("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/3d/babies_pred_",p,".csv")) 
+dat<- read_csv(paste0("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/2w/pred_babies_",p,".csv")) 
 a<-dat[,-1] 
 bb2=data.frame() 
 
@@ -93,7 +94,7 @@ total_col=cbind(dat[,1],bb2)
 
 for(i in 1:861){
   
-  result[i,p]= mean(total_col[between(total_col$X1, result[i, 2]-7, result[i, 2]), 
+  result[i,p]= mean(total_col[between(total_col$X1, result[i, 2]-14, result[i, 2]), 
                               colnames(total_col)==result[i,1]])
 }
 
@@ -105,11 +106,17 @@ for(i in 1:861){
 
 
 
-setwd("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2")
+setwd("C:/Users/zy125/Box Sync/Postdoc/BABIES/exposure_data_v2/2w")
+write.csv(result, "result_2w.csv")
 
+result$season<-time2season(result$V2, out.fmt="seasons")
 
+ggplot(result, aes(x=season,y=SO2))+geom_boxplot()+theme_classic()+theme(text = element_text(size = 16))+labs(y=paste("SO2 (µg/m3)"))
+ggplot(result, aes(x=season,y=NO2))+geom_boxplot()+theme_classic()+theme(text = element_text(size = 16))+labs(y=paste("NO2 (µg/m3)"))
+ggplot(result, aes(x=season,y=ozone))+geom_boxplot()+theme_classic()+theme(text = element_text(size = 16))+labs(y=paste("ozone (µg/m3)"))
+ggplot(result, aes(x=season,y=PM2.5))+geom_boxplot()+theme_classic()+theme(text = element_text(size = 16))+labs(y=paste("PM2.5 (µg/m3)"))
+ggplot(result, aes(x=season,y=PM10))+geom_boxplot()+theme_classic()+theme(text = element_text(size = 16))+labs(y=paste("PM10 (µg/m3)"))
+ggplot(result, aes(x=season,y=CO))+geom_boxplot()+theme_classic()+theme(text = element_text(size = 16))+labs(y=paste("CO (mg/m3)"))
+ggplot(result, aes(x=season,y=ozone_8h))+geom_boxplot()+theme_classic()+theme(text = element_text(size = 16))+labs(y=paste("ozone_8h (µg/m3)"))
 
-
-
-
-
+                                                                      
